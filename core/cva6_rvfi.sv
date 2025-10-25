@@ -397,10 +397,10 @@ module cva6_rvfi
       
       // For AMO operations, compute the actual write value
       // Note: AMO operations write a computed value to memory, not the original register value
-      if (CVA6Cfg.RVA && is_amo(commit_instr_op[i])) begin
+      if (is_amo(commit_instr_op[i])) begin
         rvfi_instr_o[i].mem_wdata <= compute_amo_wdata(
             commit_instr_op[i],                    // AMO operation type
-            commit_instr_result[i],                // Old memory value (read data)
+            wdata[i],                              // Old memory value (the value returned to rd)
             mem_q[commit_pointer[i]].rs2_rdata     // Register operand (rs2)
         );
       end else begin
